@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+  "version": "1",
+  "name": "ATN Mini Browser",
+  "description": "Mini browser for ATN",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "ATN Mini Browser"
+  },
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "http://*/"
+  ]
+}
