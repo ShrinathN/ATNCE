@@ -2,6 +2,18 @@ console.log("running!");
 var runrun = document.getElementById("runrun"); //refresh image
 var content = document.getElementById("content"); //content div
 
+function sendMessageToTab(todo, data) {
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {
+      todo: todo,
+      data: data
+    });
+  });
+}
+
 function reqListener () {
   content.innerHTML = "";
   runrun.src = "img/loading-static.png";
@@ -48,6 +60,7 @@ function reqListener () {
     var bold_heading_link = document.createElement("a");
     bold_heading_link.innerHTML = titles[i];
     bold_heading_link.href = links[i];
+    bold_heading_link.onclick = function() {window.open(links[i], 'rptTab')}
     bold_heading_link.style = "bold;color: black;font-size: 30px"
     //description
     var description_of_entry = document.createElement("p");
@@ -79,6 +92,7 @@ function reqListener () {
     content.appendChild(divWithData);
   }
 }
+
 
 runrun.onclick = function() {
   runrun.src = "img/loading.gif";

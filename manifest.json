@@ -8,9 +8,17 @@
     "default_title": "ATN Mini Browser"
   },
 
+  "content_scripts": [{
+      "matches": ["http://*"],
+      "run_at": "document_idle",
+      "js": ["js/content_script.js"]
+    }],
+
+
   "permissions": [
     "tabs",
     "storage",
-    "*://*/"
+    "http://*",
+    "https://*"
   ]
 }
