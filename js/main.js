@@ -1,6 +1,9 @@
 console.log("running!");
+var isLoading = 0;
+
 var runrun = document.getElementById("runrun"); //refresh image
 var content = document.getElementById("content"); //content div
+var status = document.getElementById("status");
 
 function sendMessageToTab(todo, data) {
   chrome.tabs.query({
@@ -15,6 +18,7 @@ function sendMessageToTab(todo, data) {
 }
 
 function reqListener () {
+  isLoading = 0;
   content.innerHTML = "";
   runrun.src = "img/loading-static.png";
   var page = this.responseText;
@@ -40,11 +44,11 @@ function reqListener () {
     publish_dates[i] = item[i].getElementsByTagName("pubDate")[0].innerHTML;
     descriptions[i] = item[i].getElementsByTagName("description")[0].innerHTML;
     test_content[i] = item[i].getElementsByTagName("content:encoded")[0];
+    console.log(test_content[i]);
     sub_content[i] = dparser.parseFromString(test_content[i].innerHTML, "text/html");
     first_images[i] = sub_content[i].getElementsByTagName("img")[0];
   }
   //creating cards
-
   for(var i = 0; i < item.length; i++)
   {
     //creating container div
@@ -58,9 +62,9 @@ function reqListener () {
     main_image.width = 390;
     //link-to-page & title
     var bold_heading_link = document.createElement("a");
+    bold_heading_link.id = "link" + i;
     bold_heading_link.innerHTML = titles[i];
     bold_heading_link.href = links[i];
-    bold_heading_link.onclick = function() {window.open(links[i], 'rptTab')}
     bold_heading_link.style = "bold;color: black;font-size: 30px"
     //description
     var description_of_entry = document.createElement("p");
@@ -93,6 +97,13 @@ function reqListener () {
   }
 }
 
+function loadTimeoutFunction()
+{
+  if(isLoading == 1) {
+    status.innerHTML = "Could not load, your internet connection is too slow!";
+    running = 0;
+  }
+}
 
 runrun.onclick = function() {
   runrun.src = "img/loading.gif";
@@ -101,4 +112,7 @@ var oReq = new XMLHttpRequest();
 oReq.addEventListener("load", reqListener);
 oReq.open("GET", url);
 oReq.send();
+isLoading = 1;
+status.innerHTML = "Loading...";
+window.setTimeout(loadTimeoutFunction, 10000);
 }
