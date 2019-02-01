@@ -5,9 +5,21 @@
   "description": "Mini browser for ATN",
   "browser_action": {
     "default_popup": "index.html",
-    "default_title": "ATN Mini Browser"
-  },
+    "default_title": "ATN Mini Browser",
 
+    "default_icon": {
+      "16": "img/icon16.png",
+      "32": "img/icon32.png",
+      "48": "img/icon48.png",
+      "128": "img/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "img/icon16.png",
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
   "permissions": [
     "tabs",
     "storage",

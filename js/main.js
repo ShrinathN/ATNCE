@@ -5,7 +5,6 @@ console.log("running!");
 
 //function to open link in new tab
 function openInNewTab(inp) {
-  alert(inp);
   window.open(inp, 'rptTab');
 }
 
